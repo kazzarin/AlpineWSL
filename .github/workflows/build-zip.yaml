@@ -15,19 +15,19 @@ jobs:
       shell: bash
       run: |
         sudo env DEBIAN_FRONTEND=noninteractive apt update -y && \
-        sudo env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends libarchive-tools curl jq tree
+        sudo env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends libarchive-tools curl jq
     - name: Build Zip x64
       shell: bash
       env:
         ARCH: 'x64'
         OUT_ZIP: 'Alpine.zip'
-      run: make -e && tree
+      run: make -e
     - name: Build Zip ARM64
       shell: bash
       env:
         ARCH: 'arm64'
         OUT_ZIP: 'Alpine_arm64.zip'
-      run: make -e && tree
+      run: make -e
     - name: Upload a Build Artifact x64
       uses: actions/upload-artifact@main
       with:
