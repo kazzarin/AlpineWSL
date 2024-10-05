@@ -1,5 +1,8 @@
 name: Release Zip CI
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -52,31 +55,9 @@ jobs:
         name: Alpine_arm64.zip
     - name: Create release
       id: create_release
-      uses: actions/create-release@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-    - name: Upload Release Asset x64
-      id: upload-release-asset-x64 
-      uses: actions/upload-release-asset@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: Alpine.zip
-        asset_name: Alpine.zip
-        asset_content_type: application/zip
-    - name: Upload Release Asset arm64
-      id: upload-release-asset-arm64
-      uses: actions/upload-release-asset@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: Alpine_arm64.zip
-        asset_name: Alpine_arm64.zip
-        asset_content_type: application/zip
+        files: |
+          Alpine.zip
+          Alpine_arm64.zip
