@@ -4,6 +4,7 @@ LNCR_EXE=Alpine.exe
 DLR=curl
 DLR_FLAGS=-L
 BASE_URL=https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/aarch64/alpine-minirootfs-3.21.0-aarch64.tar.gz
+ROOTFS_TARBALL_CKSM_URL=${BASE_URL}.sha512
 LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/23051400/icons_arm64.zip
 LNCR_ZIP_EXE=Alpine.exe
 
@@ -48,6 +49,12 @@ rootfs: base.tar.gz profile
 base.tar.gz:
 	@echo -e '\e[1;31mDownloading base.tar.gz...\e[m'
 	$(DLR) $(DLR_FLAGS) $(BASE_URL) -o base.tar.gz
+	$(DLR) $(DLR_FLAGS) $(ROOTFS_TARBALL_CKSM_URL) -o base.tar.gz.sha512sum.txt
+	if ! (head -c 128 < base.tar.gz.sha512sum.txt; echo "  base.tar.gz") | shasum -c; then \
+		echo 'Checksum failed.'; \
+		rm base.tar.gz base.tar.gz.sha512sum.txt; \
+		exit 1; \
+	fi
 
 clean:
 	@echo -e '\e[1;31mCleaning files...\e[m'
@@ -56,5 +63,6 @@ clean:
 	-rm Launcher.exe
 	-rm icons.zip
 	-rm rootfs.tar.gz
+	-rm rootfs.tar.gz.sha512sum.txt
 	-sudo rm -r rootfs
 	-rm base.tar.gz
