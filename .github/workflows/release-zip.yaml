@@ -38,31 +38,7 @@ jobs:
         make -j$(nproc) -e
         sha512sum Alpine_arm64.zip > Alpine_arm64.zip.sha512
         mv Alpine_arm64.zip* ../
-    - name: Upload a Build Artifact x64
-      uses: actions/upload-artifact@main
-      with:
-        name: Alpine.zip
-        path: ./Alpine.zip
-    - name: Upload a Build Artifact ARM64
-      uses: actions/upload-artifact@main
-      with:
-        name: Alpine_arm64.zip
-        path: ./Alpine_arm64.zip
-
-  Release:
-    needs: [Build]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Download Build Artifact x64
-      uses: actions/download-artifact@main
-      with:
-        name: Alpine.zip
-    - name: Download Build Artifact arm64
-      uses: actions/download-artifact@main
-      with:
-        name: Alpine_arm64.zip
     - name: Create release
-      id: create_release
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
