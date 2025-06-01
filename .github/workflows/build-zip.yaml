@@ -10,7 +10,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@main
+    - uses: actions/checkout@v4
     - name: Install dependencies for build (Apt)
       shell: bash
       run: |
@@ -29,12 +29,12 @@ jobs:
         OUT_ZIP: 'Alpine_arm64.zip'
       run: make -e
     - name: Upload a Build Artifact x64
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: Alpine.zip
         path: ./Alpine.zip
     - name: Upload a Build Artifact ARM64
-      uses: actions/upload-artifact@main
+      uses: actions/upload-artifact@v4
       with:
         name: Alpine_arm64.zip
         path: ./Alpine_arm64.zip
