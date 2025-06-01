@@ -14,8 +14,8 @@ jobs:
     - name: Install dependencies for build (Apt)
       shell: bash
       run: |
-        sudo env DEBIAN_FRONTEND=noninteractive apt update -y && \
-        sudo env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends libarchive-tools curl jq
+        sudo apt-get update
+        sudo apt-get install libarchive-tools
     - name: Build Zip x64
       shell: bash
       env:
