@@ -3,9 +3,9 @@ LNCR_EXE=Alpine.exe
 
 DLR=curl
 DLR_FLAGS=-L
-BASE_URL=https://dl-cdn.alpinelinux.org/alpine/v3.21/releases/aarch64/alpine-minirootfs-3.21.3-aarch64.tar.gz
+BASE_URL=https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-minirootfs-3.22.0-aarch64.tar.gz
 ROOTFS_TARBALL_CKSM_URL=${BASE_URL}.sha512
-LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/24102000/icons_arm64.zip
+LNCR_ZIP_URL=https://github.com/yuk7/wsldl/releases/download/25051300/icons_arm64.zip
 LNCR_ZIP_EXE=Alpine.exe
 
 all: $(OUT_ZIP)
